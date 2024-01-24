@@ -5,6 +5,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<TargetPlatformVersionWindows>10</TargetPlatformVersionWindows>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -16,13 +17,14 @@
 	</ItemGroup>
 
 	<Import Project="GetWindowsSDKPaths.targets" />
-	<Target Name="GenerateTlbs" AfterTargets="AfterBuild">
+	<Target Name="GenerateTlbs" BeforeTargets="BeforeBuild">
 		<GetWindowsSDKPaths>
 			<Output TaskParameter="SdkBinPath" ItemName="WindowsSDKBinPath" />
 			<Output TaskParameter="VsInstallPath" ItemName="VsInstallPath" />
 		</GetWindowsSDKPaths>
 		<MakeDir Directories="$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)tlb" />
-		<Exec Command="call &quot;@(VsInstallPath)\VC\Auxiliary\Build\vcvars64.bat&quot;&#xD;&#xA;&quot;@(WindowsSDKBinPath)\midl.exe&quot; /env x64 &quot;%(Midl.FullPath)&quot; /out &quot;$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)tlb&quot; " />
+		<Exec Command="call &quot;@(VsInstallPath)\VC\Auxiliary\Build\vcvars64.bat&quot;&#xD;&#xA;&quot;@(WindowsSDKBinPath)\midl.exe&quot; /env x64 &quot;%(Midl.FullPath)&quot; /out &quot;$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)tlb&quot; /tlb &quot;$(MSBuildProjectDirectory)\$(OutputPath)\%(Midl.FileName).tlb&quot;" />
+		<Copy SourceFiles="$(MSBuildProjectDirectory)\$(OutputPath)\%(Midl.FileName).tlb" DestinationFolder="$(SolutionDir)NativeClient" />
 	</Target>
 
 </Project>

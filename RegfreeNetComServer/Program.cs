@@ -1,14 +1,18 @@
 ﻿using System;
-using System.IO;
+using System.Runtime.Versioning;
+using RegfreeNetComServer.Com;
 
 namespace RegfreeNetComServer
 {
+    [SupportedOSPlatform("windows")]
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Hello, World!");
-            Console.WriteLine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Windows Kits", "10"));
+            using var server = new ComServer();
+            server.RegisterClassObject<Server>();
+            Console.WriteLine("Waiting for clients... Press [ENTER] to quit.");
+            Console.ReadLine();
         }
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+	<assemblyIdentity version="1.0.0.0" name="NativeClient.app" type="win32" />
+	<file name="server.tlb">
+		<typelib
+		  tlbid="{46F3FEB2-121D-4830-AA22-0CDA9EA90DC3}"
+		  version="1.0"
+		  helpdir="" />
+	</file>
+	<comInterfaceExternalProxyStub
+	  iid="{F586D6F4-AF37-441E-80A6-3D33D977882D}"
+	  name="IServer"
+	  tlbid="{46F3FEB2-121D-4830-AA22-0CDA9EA90DC3}"
+	  proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" />
+</assembly>

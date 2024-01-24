@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<TargetPlatformVersionWindows>10</TargetPlatformVersionWindows>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AvailableItemName Include="Midl" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Midl Include="Server.idl" />
+	</ItemGroup>
+
+	<Import Project="GetWindowsSDKPaths.targets" />
+	<Target Name="GenerateTlbs" AfterTargets="AfterBuild">
+		<GetWindowsSDKPaths>
+			<Output TaskParameter="SdkBinPath" ItemName="WindowsSDKBinPath" />
+			<Output TaskParameter="VsInstallPath" ItemName="VsInstallPath" />
+		</GetWindowsSDKPaths>
+		<MakeDir Directories="$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)tlb" />
+		<Exec Command="call &quot;@(VsInstallPath)\VC\Auxiliary\Build\vcvars64.bat&quot;&#xD;&#xA;&quot;@(WindowsSDKBinPath)\midl.exe&quot; /env x64 &quot;%(Midl.FullPath)&quot; /out &quot;$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)tlb&quot; " />
+	</Target>
+
+</Project>

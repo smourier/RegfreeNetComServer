@@ -87,10 +87,7 @@ public override bool Execute()
 	var conf = (VsSetup.ISetupConfiguration)Activator.CreateInstance(type);
 	var instance = conf.GetInstanceForCurrentProcess();
 	VsInstallPath = instance.GetInstallationPath();
-	
-	var sb = new StringBuilder();
-		sb.AppendLine(string.Join(Environment.NewLine, SdkIncludePaths));
-	
+
 	var msvc = Path.Combine(VsInstallPath, "VC", "Tools", "MSVC");
 	versions.Clear();
 	foreach(var toolsDir in Directory.GetDirectories(msvc))
@@ -108,7 +105,6 @@ public override bool Execute()
 		VcToolsPath  = versions.OrderByDescending(l => l.Item2).First().Item1;
 	}
 	
-	File.WriteAllText(@"d:\temp\test.txt", sb.ToString());
 	return true;
 }
 

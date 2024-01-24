@@ -23,7 +23,7 @@
 			<Output TaskParameter="VsInstallPath" ItemName="VsInstallPath" />
 		</GetWindowsSDKPaths>
 		<MakeDir Directories="$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)tlb" />
-		<Exec Command="call &quot;@(VsInstallPath)\VC\Auxiliary\Build\vcvars64.bat&quot;&#xD;&#xA;&quot;@(WindowsSDKBinPath)\midl.exe&quot; /env x64 &quot;%(Midl.FullPath)&quot; /out &quot;$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)tlb&quot; /tlb &quot;$(MSBuildProjectDirectory)\$(OutputPath)\%(Midl.FileName).tlb&quot;" />
+		<Exec Command="call &quot;@(VsInstallPath)\VC\Auxiliary\Build\vcvars64.bat&quot;&#xD;&#xA;&quot;@(WindowsSDKBinPath)\midl.exe&quot; /env x64 &quot;%(Midl.FullPath)&quot; /out &quot;$(MSBuildProjectDirectory)\$(BaseIntermediateOutputPath)tlb&quot; /tlb &quot;$(MSBuildProjectDirectory)\$(OutputPath)%(Midl.FileName).tlb&quot;" />
 		<Copy SourceFiles="$(MSBuildProjectDirectory)\$(OutputPath)\%(Midl.FileName).tlb" DestinationFolder="$(SolutionDir)NativeClient" />
 	</Target>
 

@@ -15,6 +15,8 @@ That type library is necessary for COM to marshal the `IServer` COM interface be
 
 If the `IServer` COM interface was *IUnknown*-derived instead of *IDispatch*-derived, or/and if it was using non COM-Automation compatible types (`BSTR`, `VARIANT`, `double`, etc. are COM-compatible types), then we would need to use custom proxy and stubs. They are not needed here because we use `IDispatch` and restrict ourselves to COM-Automation types. It's much easier to do so. It happens magically because `OleAut32.dll` builds a proxy and a stub dynamically from the tlb.
 
+All this works with VBScript as VBScript only uses the server's `IDispatch` implementation ("late-binding"), not the `IServer` one ("early-binding"). One can do the same with a native client (no requirement for TLB), but using `IServer` is easier from C/C++ (or other native languages for that matter).
+
 Sadly, there's no tooling in Visual Studio C# projects to build .tlb files from .idl (there is only in Visual Studio C++ projects!), so the C# project references an extra `GetWindowsSDKPaths.targets` file (to gather various Windows SDK and Visual studio paths), plus some extra lines in the `.csproj` to do that automatically.
 
 The native client needs the `server.tlb` to run. Its build is dependent on at least one .NET project successful build.
